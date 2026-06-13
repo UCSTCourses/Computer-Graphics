@@ -1,4 +1,3 @@
-
 var canvas;
 var gl;
 
