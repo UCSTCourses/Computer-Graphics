@@ -1,56 +1,22 @@
 <html>
-<head>
-    <style>
-       button{
-           width: 60px;
-           height: 60px;
-           margin: 10px;
-           font-size: 15px;
-           font-weight: bolder;
-           border-radius: 20px;
-           background-color: rosybrown;
-
-       }
-
-       button:hover{
-           background-color: darkcyan;
-           color: antiquewhite;
-           border-color: white;
-       }
-
-       #ButtonT{
-           width: 100px;
-       }
-
-       #zoomin , #zoomout{
-           background-color: royalblue;
-           font-size: 20px;
-           color: white;
-       }
-
-       .canvas , .canvas2{
-           margin-left: 90px;
-           margin-top: -180px;
-       }
-  
-
-    </style>
-</head>
 
 <script id="vertex-shader" type="x-shader/x-vertex">
 
 attribute  vec4 vPosition;
 attribute  vec4 vColor;
 varying vec4 fColor;
+
 uniform vec3 theta;
-uniform mat4 scaleMatrix;
+
 void main() 
 {
-    
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
     vec3 angles = radians( theta );
     vec3 c = cos( angles );
     vec3 s = sin( angles );
 
+    // Remeber: thse matrices are column-major
     mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
 		            0.0,  c.x,  s.x, 0.0,
 		            0.0, -s.x,  c.x, 0.0,
@@ -66,10 +32,9 @@ void main()
 		            s.z,  c.z, 0.0, 0.0,
 		            0.0,  0.0, 1.0, 0.0,
 		            0.0,  0.0, 0.0, 1.0 );
-    
 
     fColor = vColor;
-    gl_Position = rz * ry * rx * scaleMatrix * vPosition ;
+    gl_Position = rz * ry * rx * vPosition;
 } 
 </script>
 
@@ -86,37 +51,22 @@ main()
 }
 </script>
 
-
-<script type="text/javascript" src="Common/webgl-utils.js"></script>
-<script type="text/javascript" src="Common/initShaders.js"></script>
-<script type="text/javascript" src="Common/MV.js"></script>
-<script type="text/javascript" src="CubeProject.js"></script>
+<script type="text/javascript" src="Common\webgl-utils.js"></script>
+<script type="text/javascript" src="Common\initShaders.js"></script>
+<script type="text/javascript" src="Common\MV.js"></script>
+<script type="text/javascript" src="cube.js"></script>
 
 <body>
-    <button id= "xButton">Rotate X</button>
-    <button id= "yButton">Rotate Y</button>
-    <button id= "zButton">Rotate Z</button>
-    <button id = "ButtonT">Toggle Rotation</button>
-    <div class="zoomin">
-        <button id= "zoomin">+</button>
-    </div>
-    <div class="zoomout">
-       <button id= "zoomout">-</button> 
-    </div>
- 
-
-
-<br/>
-<div class="canvas">
-<canvas id="gl-canvas" width="400" height="400">
+<canvas id="gl-canvas" width="512"" height="512">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
-</div>
+   
+<br/>
 
-<div class="canvas2">
-    <canvas id="gl-canvas2" width="400" height="400">
-    Oops ... your browser doesn't support the HTML5 canvas element
-    </canvas>
-    </div>
+<button id= "xButton">Rotate X</button>
+<button id= "yButton">Rotate Y</button>
+<button id= "zButton">Rotate Z</button>
+<button id = "ButtonT">Toggle Rotation</button>
+
 </body>
 </html>
