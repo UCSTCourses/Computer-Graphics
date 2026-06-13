@@ -1,0 +1,6 @@
+git init
+git add .
+git commit -m "Upload Computer Graphics Folder to UCSTCourses "
+git branch -M main
+git remote add origin https://github.com/UCSTCourses/Computer-Graphics.git
+git push -u origin main
